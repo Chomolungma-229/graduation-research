@@ -1,0 +1,55 @@
+<!-- <!DOCTYPE html>
+<html>
+
+<head>
+  <title>form練習</title>
+</head>
+
+<body>
+  <div style="display: flex; flex-flow: column; align-content: center; align-items: center;">
+
+    <form method="POST" style="width: 100%; display: grid; justify-items: center;">
+      <input type="text" name="meigen"
+        style="width: 50%; height: 25px; border: 2px solid; margin-bottom: 15px;justify-content: space-between;">
+      <input type="submit" name="btn1" value="input" style="width:50%; height: 35px; justify-content: space-between;">
+      <p style="width: 50%; height: 200px; border: 2px solid;justify-content: space-between;">{{message}}</p>
+      <input type="submit" name="btn2" value="generate"
+        style="width: 50%; height: 35px; justify-content: space-between;"></input>
+    </form>
+
+
+
+  </div>
+
+</body>
+
+</html> -->
+
+{% extends 'base.html' %}
+
+{% block header %}
+<h1>{% block title %}Posts{% endblock %}</h1>
+{% if g.user %}
+<a class="action" href="{{ url_for('content.create') }}">New</a>
+{% endif %}
+{% endblock %}
+
+{% block content %}
+{% for post in posts %}
+<article class="post">
+  <header>
+    <div>
+      <h1>{{ post['title'] }}</h1>
+      <div class="about">by {{ post['username'] }} on {{ post['created'].strftime('%Y-%m-%d') }}</div>
+    </div>
+    {% if g.user['id'] == post['author_id'] %}
+    <a class="action" href="{{ url_for('content.update', id=post['id']) }}">Edit</a>
+    {% endif %}
+  </header>
+  <p class="body">{{ post['body'] }}</p>
+</article>
+{% if not loop.last %}
+<hr>
+{% endif %}
+{% endfor %}
+{% endblock %}
