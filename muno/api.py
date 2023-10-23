@@ -1,22 +1,30 @@
-from flask import Flask, request, render_template
+import functools
 import MeCab
 import markovify
+import json
 
-app = Flask(__name__)
+from flask import Blueprint, jsonify
 
-@app.route('/', methods=['GET', 'POST'])
-def form():
-    # ２回目以降データが送られてきた時の処理です
-    if request.method == 'POST':
-        print("inputされたデータ:" + str(request.form['meigen']))
-        return render_template('index.html')
-    # １回目のデータが何も送られてこなかった時の処理です。
-    else:
-        message = getMessage()
-        return render_template('index.html', message=message)
+from muno.db import get_db
 
-# @app.route('/', methods=['POST'])
-# def click():
+bp = Blueprint('api', __name__, url_prefix='/api')
+
+@bp.route('/mimicry-sentence', methods=['GET'])
+def random():
+    msg = getMessage()
+    test_j = {
+        'context' : msg
+    }
+    json_string = json.dumps(test_j, ensure_ascii=False)
+    return json_string
+
+@bp.route('/mimicry-sentence/<string:username>', methods=['GET'])
+def munouser(username):
+    return f"It's muno sentence by {username}"
+
+@bp.route('/mimicry-sentence/<string:username>/abc', methods=['GET'])
+def yunouser(username):
+    return f"It's yuno sentence by {username}"
 
 def getMessage():
     inputs = [
@@ -66,6 +74,3 @@ def getMessage():
     else:
         return 'None'
 
-# アプリケーションを動かすためのおまじない
-if __name__ == "__main__":
-    app.run(port = 8000, debug=True)

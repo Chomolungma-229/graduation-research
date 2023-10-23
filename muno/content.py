@@ -8,8 +8,11 @@ from muno.db import get_db
 
 bp = Blueprint('content', __name__)
 
-@bp.route('/')
+@bp.route('/', methods=('GET', 'POST'))
 def index():
+    if request.method == 'POST':
+        # TODO:ここで受け取ったデータをDBへ格納する
+        print(str(request.form['inputer']))
     db = get_db()
     posts = db.execute(
         'SELECT p.id, title, body, created, author_id, username'
