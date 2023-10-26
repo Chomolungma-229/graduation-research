@@ -1,4 +1,4 @@
-function greet() {
+function generate() {
     fetch("http://127.0.0.1:5000/api/mimicry-sentence")
         .then(function (data) {
             return data.json();

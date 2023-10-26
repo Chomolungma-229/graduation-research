@@ -33,9 +33,12 @@
 
 {% block content %}
 <form method="POST">
-  <input type="inputer" name="inputer">
+  <h3>言った内容</h3>
+  <input type="text" name="sentence">
+  <h3>誰が言ったか</h3>
+  <input type="text" name="speaker">
   <input type="submit" name="btn1" value="input">
 </form>
 <p id="output" style="width: 50%; height: 200px; border: 2px solid;">{{message}}</p>
-<button onclick="greet()">generate</button>
+<button onclick="generate()">generate</button>
 {% endblock %}

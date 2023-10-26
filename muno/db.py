@@ -28,6 +28,17 @@ def init_db():
     with current_app.open_resource('schema.sql') as f:
         db.executescript(f.read().decode('utf8'))
 
+def delete_row(table, row):
+    db = get_db()
+    conn = sqlite3.connect('test_db.db')
+
+    cur = conn.cursor()
+
+    cur.execute('DELETE from {table} where id = "{row}";')
+
+    conn.commit()
+
+    print(cur.fetchall())
 
 @click.command('init-db')
 def init_db_command():

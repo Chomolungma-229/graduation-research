@@ -7,6 +7,13 @@ CREATE TABLE user (
     password TEXT NOT NULL
 );
 
+CREATE TABLE sentence (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    speaker TEXT NOT NULL,
+    content TEXT NOT NULL,
+    input_by TEXT
+);
+
 CREATE TABLE post (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     author_id INTEGER NOT NULL,

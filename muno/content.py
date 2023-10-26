@@ -9,17 +9,22 @@ from muno.db import get_db
 bp = Blueprint('content', __name__)
 
 @bp.route('/', methods=('GET', 'POST'))
+@login_required
 def index():
     if request.method == 'POST':
         # TODO:ここで受け取ったデータをDBへ格納する
-        print(str(request.form['inputer']))
-    db = get_db()
-    posts = db.execute(
-        'SELECT p.id, title, body, created, author_id, username'
-        ' FROM post p JOIN user u ON p.author_id = u.id'
-        ' ORDER BY created DESC'
-    ).fetchall()
-    return render_template('content/index.html', posts=posts)
+        content = str(request.form['sentence'])+"。"
+        speaker = str(request.form['speaker'])
+        db = get_db()
+        db.execute(
+            'INSERT INTO sentence (content, speaker, input_by)'
+            ' VALUES (?, ?, ?)',
+            (content, speaker, g.user['username']),
+        )
+        db.commit()
+        content = ""
+        speaker = ""
+    return render_template('content/index.html')
 
 @bp.route('/create', methods=('GET', 'POST'))
 @login_required
