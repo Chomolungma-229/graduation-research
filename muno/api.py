@@ -6,7 +6,7 @@ import sqlite3
 
 from flask import Blueprint, jsonify
 
-from muno.db import get_db
+from muno.db import get_db, get_sentence
 
 bp = Blueprint('api', __name__, url_prefix='/api')
 
@@ -28,15 +28,7 @@ def yunouser(username):
     return f"It's yuno sentence by {username}"
 
 def getMessage():
-    # inputs = [
-    #     "恥の多い生涯を送って来ました。",
-    #     "自分には、人間の生活というものが、見当つかないのです。",
-    #     "自分は東北の田舎に生れましたので、汽車をはじめて見たのは、よほど大きくなってからでした。",
-    #     "自分は子供の頃から病弱で、よく寝込みましたが、寝ながら、敷布、枕のカヴァ、掛蒲団のカヴァを、つくづく、つまらない装飾だと思い、それが案外に実用品だった事を、二十歳ちかくになってわかって、人間のつましさに暗然とし、悲しい思いをしました。",
-    #     "('自分は、空腹という事を知りませんでした。,')",
-    #     "('自分だって、それは勿論、大いにものを食べますが、しかし、空腹感から、ものを食べた記憶は、ほとんどありません。',)",
-    # ]
-    inputs = getDb() 
+    inputs = get_sentence() 
     print(inputs)
 
     mecab = MeCab.Tagger()
@@ -49,7 +41,6 @@ def getMessage():
     for line in inputs:
         # lineの文字列をパースする
         parsed_nodes = mecab.parseToNode(line)
-        print(parsed_nodes)
 
         while parsed_nodes:
             try:
@@ -66,27 +57,17 @@ def getMessage():
                 print('Error : ', line)
             finally:
                 # 次の形態素に上書きする。なければNoneが入る
-                print(splitted_meigen)
                 parsed_nodes = parsed_nodes.next
+
+    print('解析結果 :\n', splitted_meigen)
+    
     # マルコフ連鎖のモデルを作成
     model = markovify.NewlineText(splitted_meigen, state_size=2)
     # 文章を生成する
     sentence = model.make_sentence(tries=100)
-    print(sentence)
     if sentence is not None:
         # 分かち書きされているのを結合して出力する
         return ''.join(sentence.split())
 
     else:
         return 'None'
-
-def getDb():
-    conn = sqlite3.connect('instance/muno.sqlite')
-    cur = conn.cursor()
-    cur.execute('SELECT content FROM sentence')
-    list = []
-    for row in cur:
-        list.append(str(row))
-    cur.close()
-    conn.close()
-    return list

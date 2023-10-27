@@ -13,6 +13,8 @@ bp = Blueprint('content', __name__)
 def index():
     if request.method == 'POST':
         # TODO:ここで受け取ったデータをDBへ格納する
+        content = ""
+        speaker = ""
         content = str(request.form['sentence'])+"。"
         speaker = str(request.form['speaker'])
         db = get_db()
@@ -22,8 +24,6 @@ def index():
             (content, speaker, g.user['username']),
         )
         db.commit()
-        content = ""
-        speaker = ""
     return render_template('content/index.html')
 
 @bp.route('/create', methods=('GET', 'POST'))

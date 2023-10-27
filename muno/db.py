@@ -40,6 +40,17 @@ def delete_row(table, row):
 
     print(cur.fetchall())
 
+def get_sentence():
+    conn = sqlite3.connect('instance/muno.sqlite')
+    cur = conn.cursor()
+    cur.execute('SELECT content FROM sentence')
+    list = []
+    for row in cur:
+        list.append(str(row))
+    cur.close()
+    conn.close()
+    return list
+
 @click.command('init-db')
 def init_db_command():
     """Clear the existing data and create new tables."""
