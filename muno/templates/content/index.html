@@ -1,30 +1,3 @@
-<!-- <!DOCTYPE html>
-<html>
-
-<head>
-  <title>form練習</title>
-</head>
-
-<body>
-  <div style="display: flex; flex-flow: column; align-content: center; align-items: center;">
-
-    <form method="POST" style="width: 100%; display: grid; justify-items: center;">
-      <input type="text" name="meigen"
-        style="width: 50%; height: 25px; border: 2px solid; margin-bottom: 15px;justify-content: space-between;">
-      <input type="submit" name="btn1" value="input" style="width:50%; height: 35px; justify-content: space-between;">
-      <p style="width: 50%; height: 200px; border: 2px solid;justify-content: space-between;">{{message}}</p>
-      <input type="submit" name="btn2" value="generate"
-        style="width: 50%; height: 35px; justify-content: space-between;"></input>
-    </form>
-
-
-
-  </div>
-
-</body>
-
-</html> -->
-
 {% extends 'base.html' %}
 
 {% block header %}
@@ -34,9 +7,9 @@
 {% block content %}
 <form method="POST">
   <h3>言った内容</h3>
-  <input type="text" name="sentence">
+  <input type="text" name="sentence" required>
   <h3>誰が言ったか</h3>
-  <input type="text" name="speaker">
+  <input type="text" name="speaker" required>
   <input type="submit" name="btn1" value="input">
 </form>
 <p id="output" style="width: 50%; height: 200px; border: 2px solid;">{{message}}</p>

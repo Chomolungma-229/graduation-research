@@ -13,22 +13,27 @@ bp = Blueprint('api', __name__, url_prefix='/api')
 @bp.route('/mimicry-sentence', methods=['GET'])
 def random():
     msg = getMessage()
-    test_j = {
+    result = {
         'context' : msg
     }
-    json_string = json.dumps(test_j, ensure_ascii=False)
+    json_string = json.dumps(result, ensure_ascii=False)
     return json_string
 
 @bp.route('/mimicry-sentence/<string:username>', methods=['GET'])
 def munouser(username):
-    return f"It's muno sentence by {username}"
+    msg = getMessage(username)
+    result = {
+        'context' : msg
+    }
+    json_string = json.dumps(result, ensure_ascii=False)
+    return json_string
 
 @bp.route('/mimicry-sentence/<string:username>/abc', methods=['GET'])
 def yunouser(username):
     return f"It's yuno sentence by {username}"
 
-def getMessage():
-    inputs = get_sentence() 
+def getMessage(username = None):
+    inputs = get_sentence(username)
     print(inputs)
 
     mecab = MeCab.Tagger()
@@ -60,7 +65,7 @@ def getMessage():
                 parsed_nodes = parsed_nodes.next
 
     print('解析結果 :\n', splitted_meigen)
-    
+
     # マルコフ連鎖のモデルを作成
     model = markovify.NewlineText(splitted_meigen, state_size=2)
     # 文章を生成する
