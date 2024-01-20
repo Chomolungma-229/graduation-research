@@ -3,10 +3,14 @@
 <script src="{{ url_for('static', filename='main.js') }}"></script>
 <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 <nav>
-    <h1>Muno</h1>
+    {% if title == 'index' %}
+    <h1><a href="{{ url_for('content.index') }}">Muno</a></h1>
+    {% else %}
+    <h1><a href="{{ url_for('content.index') }}">Muno</a><span id="noLink">{{title}}</span></h1>
+    {% endif %}
     <ul>
         {% if g.user %}
-        <li><span>{{ g.user['username'] }}</span>
+        <li><a href="{{ url_for('content.mypage')}}">{{ g.user['username'] }}</a>
         <li><a href="{{ url_for('auth.logout') }}">Log Out</a>
             {% else %}
         <li><a href="{{ url_for('auth.register') }}">Register</a>

@@ -58,10 +58,11 @@ header .action {
 
 .content {
     padding: 0 1rem 1rem;
+    margin-top: 5%;
 }
 
 .content>header {
-    border-bottom: 1px solid lightgray;
+    /* border-bottom: 1px solid lightgray; */
     display: flex;
     align-items: flex-end;
 }
@@ -135,3 +136,56 @@ input[type=submit] {
     align-self: start;
     min-width: 10em;
 }
+
+#output {
+    width: 100%;
+    height: 200px;
+    border: 2px solid;
+    background-color: #ffffff;
+}
+
+#noLink {
+    color: #636363;
+}
+
+#tabcontrol a {
+    display: inline-block;
+    border-width: 1px 1px 0px 1px;
+    border-style: solid;
+    border-color: black;
+    border-radius: 0.75em 0.75em 0 0;
+    padding: 0.4em 21.2%;
+    text-decoration: none;
+    /* margin-left: 5px; */
+    color: black;
+    background-color: white;
+    font-weight: bold;
+    position: relative;
+}
+
+#tabcontrol #tab2 {
+    margin-left: 0.5%;
+}
+
+#tabbody div {
+    border: 1px solid black;
+    margin-top: -17px;
+    padding: 1em;
+    background-color: white;
+    position: relative;
+    z-index: 0;
+}
+
+/* ▼タブの配色 */
+#tabcontrol a:nth-child(1),
+#tabbody div:nth-child(1) {
+    background-color: #ffffdd;
+}
+
+/* 1つ目のタブとその中身用の配色 */
+#tabcontrol a:nth-child(2),
+#tabbody div:nth-child(2) {
+    background-color: #ddffdd;
+}
+
+/* 2つ目のタブとその中身用の配色 */

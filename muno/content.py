@@ -8,6 +8,7 @@ from muno.db import get_db
 
 bp = Blueprint('content', __name__)
 
+
 @bp.route('/', methods=('GET', 'POST'))
 @login_required
 def index():
@@ -25,4 +26,11 @@ def index():
                 (content, speaker, g.user['username']),
             )
             db.commit()
-    return render_template('content/index.html')
+    return render_template('content/index.html', title="index")
+
+
+@bp.route('/mypage', methods=('GET', 'POST'))
+@login_required
+def mypage():
+
+    return render_template('content/mypage.html', title="mypage")
