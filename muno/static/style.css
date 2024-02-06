@@ -163,8 +163,12 @@ input[type=submit] {
     position: relative;
 }
 
+#tabcontrol #tab1 {
+    margin-right: -21px;
+}
+
 #tabcontrol #tab2 {
-    margin-left: 0.5%;
+    margin-left: 24.6px
 }
 
 #tabbody div {
