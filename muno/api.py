@@ -4,9 +4,9 @@ import markovify
 import json
 import sqlite3
 
-from flask import Blueprint, jsonify
+from flask import Blueprint
 
-from muno.db import get_db, get_sentence
+from muno.db import get_sentence
 
 bp = Blueprint('api', __name__, url_prefix='/api')
 
@@ -34,7 +34,6 @@ def yunouser(username):
 
 def getMessage(username = None):
     inputs = get_sentence(username)
-    print(inputs)
 
     mecab = MeCab.Tagger()
 
@@ -64,10 +63,8 @@ def getMessage(username = None):
                 # 次の形態素に上書きする。なければNoneが入る
                 parsed_nodes = parsed_nodes.next
 
-    print('解析結果 :\n', splitted_meigen)
-
     # マルコフ連鎖のモデルを作成
-    model = markovify.NewlineText(splitted_meigen, state_size=2)
+    model = markovify.NewlineText(splitted_meigen, state_size=1)
     # 文章を生成する
     sentence = model.make_sentence(tries=100)
     if sentence is not None:

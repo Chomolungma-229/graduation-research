@@ -32,21 +32,6 @@ def init_app(app):
     app.teardown_appcontext(close_db)
     app.cli.add_command(init_db_command)
 
-def delete_row(table, row):
-    db = get_db()
-    conn = sqlite3.connect('test_db.db')
-    cur = conn.cursor()
-    cur.execute('DELETE FROM {table} WHERE id = "{row}";')
-    conn.commit()
-    print(cur.fetchall())
-
-def exist_speaker(username):
-    conn = sqlite3.connect('instance/muno.sqlite')
-    cur = conn.cursor()
-    cur.execute('SELECT content COUNT(content) FROM sentence WHERE name = {username}')
-    print(cur)
-    return True
-
 def get_sentence(username):
     print(username)
     conn = sqlite3.connect('instance/muno.sqlite')
